@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  Generador de íconos PWA para AgroVet Pedidos
+
+  Instrucciones:
+  1. Abrí este archivo en tu navegador (doble clic)
+  2. Hacé clic en "Generar y descargar íconos"
+  3. Se descargan: pwa-192x192.png, pwa-512x512.png, apple-touch-icon.png
+  4. Mové los 3 archivos a la carpeta /public de tu proyecto
+
+  Opcional: para usar tu propio logo, reemplazá el emoji 🌿 por una imagen
+  modificando la función drawIcon() abajo.
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generar íconos PWA</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 40px auto; padding: 0 20px; }
+    canvas { border: 1px solid #ccc; margin: 8px; border-radius: 8px; }
+    button { background: #16a34a; color: white; border: none; padding: 14px 28px;
+             border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+    button:hover { background: #15803d; }
+    .previews { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; align-items: flex-end; }
+    p { color: #555; }
+  </style>
+</head>
+<body>
+  <h2>🌿 Generador de íconos PWA</h2>
+  <p>Genera los íconos necesarios para instalar AgroVet Pedidos como PWA.</p>
+
+  <div class="previews">
+    <div><p style="margin:0;font-size:12px;color:#888">192×192</p><canvas id="c192" width="192" height="192"></canvas></div>
+    <div><p style="margin:0;font-size:12px;color:#888">512×512</p><canvas id="c512" width="512" height="512"></canvas></div>
+    <div><p style="margin:0;font-size:12px;color:#888">180×180 (iOS)</p><canvas id="c180" width="180" height="180"></canvas></div>
+  </div>
+
+  <button onclick="generarYDescargar()">Generar y descargar íconos</button>
+
+  <script>
+    function drawIcon(canvas) {
+      const size = canvas.width
+      const ctx = canvas.getContext('2d')
+      const r = size * 0.18   // radio de esquinas redondeadas
+
+      // Fondo verde (rounded rect)
+      ctx.fillStyle = '#16a34a'
+      ctx.beginPath()
+      ctx.roundRect(0, 0, size, size, r)
+      ctx.fill()
+
+      // Emoji centrado
+      ctx.font = `${size * 0.58}px serif`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
+      ctx.fillText('🌿', size / 2, size / 2 + size * 0.03)
+
+      // Texto "AV" pequeño abajo
+      ctx.font = `bold ${size * 0.13}px sans-serif`
+      ctx.fillStyle = 'rgba(255,255,255,0.85)'
+      ctx.fillText('AgroVet', size / 2, size * 0.86)
+    }
+
+    // Dibujar previews al cargar
+    ['c192', 'c512', 'c180'].forEach(id => {
+      const c = document.getElementById(id)
+      c.style.width = (c.width / 2) + 'px'
+      c.style.height = (c.height / 2) + 'px'
+      drawIcon(c)
+    })
+
+    function descargar(canvas, nombre) {
+      const a = document.createElement('a')
+      a.download = nombre
+      a.href = canvas.toDataURL('image/png')
+      a.click()
+    }
+
+    function generarYDescargar() {
+      descargar(document.getElementById('c192'), 'pwa-192x192.png')
+      setTimeout(() => descargar(document.getElementById('c512'), 'pwa-512x512.png'), 300)
+      setTimeout(() => descargar(document.getElementById('c180'), 'apple-touch-icon.png'), 600)
+      alert('✅ Íconos descargados.\n\nMové los 3 archivos .png a la carpeta /public de tu proyecto.')
+    }
+  </script>
+</body>
+</html>
