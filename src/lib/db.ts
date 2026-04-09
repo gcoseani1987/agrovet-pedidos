@@ -42,18 +42,26 @@ class AgroVetDB extends Dexie {
   constructor() {
     super('agrovet-pedidos')
 
+    // v1: schema inicial (sin índices compuestos ni multi-entry)
     this.version(1).stores({
-      // Catálogo — índices para búsqueda rápida
+      categorias:    'id',
+      productos:     'id',
+      listas_precios:'id',
+      precios:       'id',
+      vendedor:      'id',
+      clientes:      'id',
+      pedidos:       'id',
+      pedido_items:  'id',
+    })
+
+    // v2: schema completo con todos los índices
+    this.version(2).stores({
       categorias:    'id, nombre, activo',
-      productos:     'id, codigo, nombre, categoria_id, activo, *nombre',
+      productos:     'id, codigo, nombre, categoria_id, activo',
       listas_precios:'id, nombre, activo',
       precios:       'id, [producto_id+lista_precio_id], producto_id, lista_precio_id',
-
-      // Datos del vendedor
       vendedor:      'id',
       clientes:      'id, vendedor_id, razon_social, cuit, localidad, estado, _synced',
-
-      // Pedidos
       pedidos:       'id, vendedor_id, cliente_id, estado, created_at, _synced',
       pedido_items:  'id, pedido_id, producto_id',
     })
