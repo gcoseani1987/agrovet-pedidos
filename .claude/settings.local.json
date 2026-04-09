@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(vercel:*)",
+      "WebFetch(domain:agrovet-pedidos-771ulslme-gcoseani1987s-projects.vercel.app)",
+      "Bash(curl -i \"https://agrovet-pedidos-771ulslme-gcoseani1987s-projects.vercel.app\")"
     ]
   }
 }
