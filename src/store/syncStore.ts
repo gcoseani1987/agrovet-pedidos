@@ -10,6 +10,7 @@ import {
 
 interface SyncState {
   status: SyncStatus
+  isOnline: boolean
   pendientes: number          // total (pedidos + clientes)
   pedidosPendientes: number
   clientesPendientes: number
@@ -20,10 +21,12 @@ interface SyncState {
   sincronizar: () => Promise<void>
   actualizarPendientes: () => Promise<void>
   incrementarPendientes: () => void
+  setOnline: (online: boolean) => void
 }
 
 export const useSyncStore = create<SyncState>((set, get) => ({
   status: 'idle',
+  isOnline: navigator.onLine,
   pendientes: 0,
   pedidosPendientes: 0,
   clientesPendientes: 0,
@@ -77,4 +80,6 @@ export const useSyncStore = create<SyncState>((set, get) => ({
       pedidosPendientes: state.pedidosPendientes + 1,
     }))
   },
+
+  setOnline: (online: boolean) => set({ isOnline: online }),
 }))

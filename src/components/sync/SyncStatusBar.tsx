@@ -1,4 +1,3 @@
-import { useNetworkStatus } from '@/hooks/useNetworkStatus'
 import { useSyncStore } from '@/store/syncStore'
 
 function formatRelativo(isoString: string): string {
@@ -12,8 +11,7 @@ function formatRelativo(isoString: string): string {
 }
 
 export function SyncStatusBar() {
-  const isOnline = useNetworkStatus()
-  const { status, pendientes, pedidosPendientes, clientesPendientes, progreso, ultimaSync, stats, sincronizar } = useSyncStore()
+  const { isOnline, status, pendientes, pedidosPendientes, clientesPendientes, progreso, ultimaSync, stats, sincronizar } = useSyncStore()
 
   // ---- Offline ----
   if (!isOnline) {
